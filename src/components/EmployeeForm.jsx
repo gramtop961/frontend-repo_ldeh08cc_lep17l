@@ -1,45 +1,20 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Upload, User, Calendar, Briefcase, Image } from "lucide-react";
 
-const DOMAIN_MAP = {
-  "Consultant": 2,
-  "Data Analyst": 6,
-  "Project Manager": 5,
-  "Business Analysits": 7,
-  "Developers": 4,
-  "Sales": 3,
-  "Human Resources": 1,
-  "Digital Marketing": 9,
-  "Cyber Security": 8,
-  "Process Associates": 10,
-  "Security Anlayst": 11,
-  "SAP Consultant": 12,
-  "Data Scientist": 24,
-  "R&D": 15,
-  "Trainers": 13,
-  "UI/UX": 14,
-  "Administrative Manager": 16,
-  "Ai Automator": 17,
-  "CFO": 18,
-  "CMO": 19,
-  "CTO": 20,
-  "Devops Engineer": 21,
-  "Director": 22,
-  "Graphical Designer": 23,
-};
-
-function pad2(n) {
-  return String(n).padStart(2, "0");
-}
-
-export default function EmployeeForm({ onGenerate }) {
+export default function EmployeeForm({ onGenerate, domainMap }) {
   const [name, setName] = useState("");
   const [yoj, setYoj] = useState("");
   const [type, setType] = useState("P");
-  const [domain, setDomain] = useState("Developers");
+  const [domain, setDomain] = useState("");
   const [photo, setPhoto] = useState(null);
 
-  const domainId = DOMAIN_MAP[domain];
+  // Ensure we have a default selected domain when the map changes
+  useEffect(() => {
+    const keys = Object.keys(domainMap || {});
+    if (keys.length && !domain) setDomain((prev) => prev || keys[0]);
+  }, [domainMap, domain]);
+
+  const domainId = domain ? domainMap[domain] : undefined;
 
   const empId = useMemo(() => {
     if (!yoj || !domainId) return "";
@@ -123,7 +98,7 @@ export default function EmployeeForm({ onGenerate }) {
               onChange={(e) => setDomain(e.target.value)}
               className="w-full pl-10 pr-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              {Object.keys(DOMAIN_MAP).map((d) => (
+              {Object.keys(domainMap).map((d) => (
                 <option key={d} value={d}>{d}</option>
               ))}
             </select>
