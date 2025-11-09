@@ -5,6 +5,7 @@ import EmployeeForm from "./components/EmployeeForm";
 import EmployeeCard from "./components/EmployeeCard";
 import DomainManager from "./components/DomainManager";
 import IdViewer from "./components/IdViewer";
+import DomainViewer from "./components/DomainViewer";
 
 const DEFAULT_DOMAIN_MAP = {
   "Consultant": 2,
@@ -77,6 +78,7 @@ function App() {
             <div className="space-y-6">
               <EmployeeForm onGenerate={handleGenerate} domainMap={domainMap} />
               <DomainManager domainMap={domainMap} onAddDomain={handleAddDomain} />
+              <DomainViewer domainMap={domainMap} />
             </div>
             <div className="space-y-6">
               {result ? (
