@@ -95,7 +95,7 @@ function App() {
                 </div>
                 <div className="mt-2 text-xs text-slate-500">Domains available: {domainCount}</div>
               </div>
-              <IdViewer />
+              <IdViewer domainMap={domainMap} />
             </div>
           </div>
         )}
